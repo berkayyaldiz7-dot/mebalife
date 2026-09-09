@@ -27,6 +27,7 @@
     --paper:#FFFFFF;
     --bronze:#A17400;
     --bronze-light:#C9A23F;
+    --bronze-empty:rgba(161,116,0,.20);   /* dolmamis bar */
     --ink:#18160F;
     --ink-soft:#4A473E;
     --line-dark:rgba(255,255,255,.14);
@@ -81,6 +82,22 @@
   .bars.dim i:nth-child(2),.bars.dim i:nth-child(3){background:rgba(161,116,0,.32);}
   .bars.half i:nth-child(3){background:rgba(161,116,0,.32);}
 
+  /* üç barlı işaret satır indikçe dolar: 1 / 2 / 3 bronz */
+  .seq-list .bars i{background:var(--bronze-empty);transition:background-color .55s var(--soft);}
+  .seq-list li:nth-child(1) .bars i:nth-child(1){background:var(--bronze);}
+  .seq-list li:nth-child(2) .bars i:nth-child(1),
+  .seq-list li:nth-child(2) .bars i:nth-child(2){background:var(--bronze);}
+  .seq-list li:nth-child(n+3) .bars i{background:var(--bronze);}
+  /* dolan barlar satır ekrana girerken çizilsin */
+  .seq-list li{--seq:0s;}
+  .seq-list li:nth-child(2){--seq:.14s;}
+  .seq-list li:nth-child(3){--seq:.28s;}
+  .seq-list .bars i{transform:scaleX(0);transform-origin:left center;
+    transition:transform .5s var(--soft),background-color .55s var(--soft);transition-delay:var(--seq);}
+  .reveal:not(.pre) .seq-list .bars i{transform:scaleX(1);}
+  @media (prefers-reduced-motion:reduce){
+    .seq-list .bars i{transform:scaleX(1)!important;transition:none!important;}
+  }
   /* ---------- reveal-on-scroll (visible by default; JS arms it) ---------- */
   .reveal{transition:opacity .7s var(--ease),transform .7s var(--ease);}
   .reveal.pre{opacity:0;transform:translateY(24px);}
@@ -242,6 +259,8 @@
   .gate ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
   .gate li{display:flex;align-items:center;gap:10px;font-size:.88rem;color:rgba(255,255,255,.6);}
   .gate li i{width:9px;height:3px;background:var(--bronze);flex:none;display:inline-block;}
+  .gate li .bars{flex:none;gap:4px;}
+  .gate li .bars i{width:15px;height:2px;}
   .gate .under{height:2px;width:0;background:var(--bronze);transition:width .4s var(--ease);margin-top:auto;}
   .gate:hover .under{width:100%;}
 
@@ -553,7 +572,6 @@
   .assurances .bars{flex:none;margin-top:4px;}
   .assurances strong{color:var(--paper);font-weight:400;}
   .form-status{font-family:'Stardom',Georgia,'Times New Roman',serif;font-size:.78rem;color:var(--bronze-light);min-height:1.2em;}
-
   /* ---------- kapanış ---------- */
   #closing{text-align:center;}
   #closing h2{font-size:clamp(1.8rem,4.4vw,3.2rem);max-width:24ch;margin:0 auto 20px;}
@@ -686,10 +704,10 @@
         </div>
         <h3>Arsam var,<br>değerlendirmek istiyorum</h3>
         <p class="said">"Arsamı verirsem bu iş yarım kalır mı?"</p>
-        <ul>
-          <li><i></i>Kat karşılığı inşaat</li>
-          <li><i></i>Konut projeleri ve daire teslimi</li>
-          <li><i></i>Paylaşım ve teminat maddeleri</li>
+        <ul class="seq-list">
+          <li><span class="bars tiny"><i></i><i></i><i></i></span>Kat karşılığı inşaat</li>
+          <li><span class="bars tiny"><i></i><i></i><i></i></span>Konut projeleri ve daire teslimi</li>
+          <li><span class="bars tiny"><i></i><i></i><i></i></span>Paylaşım ve teminat maddeleri</li>
         </ul>
         <a class="link-arrow" href="#surec">Süreci baştan sona görün →</a>
         <div class="under"></div>
@@ -701,10 +719,10 @@
         </div>
         <h3>Yapılacak<br>bir işim var</h3>
         <p class="said">"Bütçeyi ve süreyi tutturur mu, şantiyede sorumluluk kimde?"</p>
-        <ul>
-          <li><i></i>Anahtar teslim taahhüt</li>
-          <li><i></i>Kaba yapı ve taşeronluk</li>
-          <li><i></i>Fabrika, depo, ofis, tadilat</li>
+        <ul class="seq-list">
+          <li><span class="bars tiny"><i></i><i></i><i></i></span>Anahtar teslim taahhüt</li>
+          <li><span class="bars tiny"><i></i><i></i><i></i></span>Kaba yapı ve taşeronluk</li>
+          <li><span class="bars tiny"><i></i><i></i><i></i></span>Fabrika, depo, ofis, tadilat</li>
         </ul>
         <a class="link-arrow" href="#biz">Kapasite ve belgeleri görün →</a>
         <div class="under"></div>
@@ -1272,7 +1290,7 @@
       <div class="give-first reveal pre">
         <h3>Önce siz alın</h3>
         <p>İlgilendiğiniz iş tipini seçin; size o işe özel hazırlanmış sunum dosyasını gönderelim. Görüşmeye, elinizde belge varken başlayın.</p>
-        <ul class="give-list">
+        <ul class="give-list seq-list">
           <li><span class="bars tiny"><i></i><i></i><i></i></span>Kat karşılığı süreç rehberi — paylaşım, teminat, takvim</li>
           <li><span class="bars tiny"><i></i><i></i><i></i></span>Kurumsal taahhüt dosyası — kapasite, belgeler, İSG yapılanması</li>
           <li><span class="bars tiny"><i></i><i></i><i></i></span>Örnek sözleşme maddeleri — gecikme cezası ve hakediş kurgusu</li>
@@ -1314,7 +1332,7 @@
         </button>
         <p class="form-status" id="form-status" role="status"></p>
 
-        <ul class="assurances">
+        <ul class="assurances seq-list">
           <li><span class="bars tiny"><i></i><i></i><i></i></span><span><strong>48 saat içinde</strong> yazılı dönüş yapılır.</span></li>
           <li><span class="bars tiny"><i></i><i></i><i></i></span><span>Sizi <strong>[Ad Soyad], [unvan]</strong> arar — santral değil, işi yürütecek kişi.</span></li>
           <li><span class="bars tiny"><i></i><i></i><i></i></span><span>Numaranız <strong>hiçbir listeye eklenmez</strong>, pazarlama araması yapılmaz.</span></li>
